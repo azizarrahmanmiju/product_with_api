@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getdummy_product_by_http/Screen/PRoductdetailsScreen.dart';
 import 'package:getdummy_product_by_http/api_service/service.dart';
 import 'package:getdummy_product_by_http/utility/Product.dart';
 
@@ -14,7 +15,7 @@ class _ProductListPageState extends State<ProductListPage> {
   @override
   void initState() {
     super.initState();
-    products = ProductService().getproduct();
+    products = ProductService.getproduct();
   }
 
   @override
@@ -39,10 +40,23 @@ class _ProductListPageState extends State<ProductListPage> {
             itemCount: productList.length,
             itemBuilder: (context, index) {
               final product = productList[index];
-              return ListTile(
-                title: Text(product.title),
-                subtitle: Text('${product.price} USD'),
-                leading: Image.network(product.thumbnail, width: 50, height: 50),
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                     
+                     MaterialPageRoute(
+                      builder: (context) => ProductDetailsScreen(
+                        id:product.id.toString(),)),
+                     );
+                },
+                child: Card(
+                  child: ListTile(
+                    title: Text(product.title),
+                    subtitle: Text('${product.price} USD'),
+                    leading: Image.network(product.thumbnail, width: 50, height: 50),
+                  ),
+                ),
               );
             },
           );
